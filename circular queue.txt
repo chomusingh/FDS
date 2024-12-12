@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+
+class CircularQueue {
+private:
+    int front, rear;
+    int size;
+    int *queue;
+
+public:
+    // Constructor to initialize the circular queue
+    CircularQueue(int s) {
+        size = s;
+        queue = new int[size];
+        front = -1;
+        rear = -1;
+    }
+
+    // Destructor to release memory
+    ~CircularQueue() {
+        delete[] queue;
+    }
+
+    // Enqueue operation
+    void enqueue(int value) {
+        if ((rear + 1) % size == front) {
+            cout << "Queue is full. Cannot insert " << value << endl;
+            return;
+        }
+        if (front == -1) {
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % size;
+        }
+        queue[rear] = value;
+        cout << "Inserted " << value << endl;
+    }
+
+    // Dequeue operation
+    void dequeue() {
+        if (front == -1) {
+            cout << "Queue is empty. Nothing to dequeue." << endl;
+            return;
+        }
+        cout << "Removed " << queue[front] << endl;
+        if (front == rear) {
+            // Reset the queue
+            front = rear = -1;
+        } else {
+            front = (front + 1) % size;
+        }
+    }
+
+    // Display queue contents
+    void display() {
+        if (front == -1) {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+        cout << "Queue elements are: ";
+        int i = front;
+        while (true) {
+            cout << queue[i] << " ";
+            if (i == rear) break;
+            i = (i + 1) % size;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    int size;
+    cout << "Enter the size of the circular queue: ";
+    cin >> size;
+
+    CircularQueue cq(size);
+
+    int choice, value;
+    do {
+        cout << "\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value to insert: ";
+                cin >> value;
+                cq.enqueue(value);
+                break;
+            case 2:
+                cq.dequeue();
+                break;
+            case 3:
+                cq.display();
+                break;
+            case 4:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
