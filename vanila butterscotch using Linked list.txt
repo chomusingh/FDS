@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Node structure for the linked list
+struct Node {
+    int id;
+    string name;
+    Node* next;
+
+    // Constructor to initialize a new node
+    Node(int id, string name) : id(id), name(name), next(nullptr) {}
+};
+
+// Singly Linked List class
+class FlavorList {
+private:
+    Node* head;
+
+public:
+    // Constructor
+    FlavorList() : head(nullptr) {}
+
+    // Function to add a student to the list
+    void addStudent(int id, const string& name) {
+        Node* newNode = new Node(id, name);
+
+        if (head == nullptr) {
+            head = newNode; // First student in the list
+        } else {
+            Node* temp = head;
+            while (temp->next != nullptr) {
+                temp = temp->next; // Traverse to the end of the list
+            }
+            temp->next = newNode;
+        }
+
+        cout << "Student added: " << name << " (ID: " << id << ")\n";
+    }
+
+    // Function to display all students in the list
+    void displayStudents(const string& flavor) {
+        if (head == nullptr) {
+            cout << "No students like " << flavor << ".\n";
+            return;
+        }
+
+        Node* temp = head;
+        cout << "\nStudents who like " << flavor << ":\n";
+        while (temp != nullptr) {
+            cout << "ID: " << temp->id << ", Name: " << temp->name << "\n";
+            temp = temp->next;
+        }
+    }
+
+    // Destructor to free memory
+    ~FlavorList() {
+        Node* temp;
+        while (head != nullptr) {
+            temp = head;
+            head = head->next;
+            delete temp;
+        }
+        cout << "Flavor list destroyed.\n";
+    }
+};
+
+int main() {
+    FlavorList vanillaList;
+    FlavorList butterscotchList;
+
+    // Adding students to Vanilla list
+    vanillaList.addStudent(1, "Alice");
+    vanillaList.addStudent(2, "Bob");
+
+    // Adding students to Butterscotch list
+    butterscotchList.addStudent(3, "Charlie");
+    butterscotchList.addStudent(4, "Diana");
+
+    // Displaying lists
+    vanillaList.displayStudents("Vanilla");
+    butterscotchList.displayStudents("Butterscotch");
+
+    return 0;
+}

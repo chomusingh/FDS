@@ -1,0 +1,30 @@
+write a C++ code Store marks of students using array in.and give an input and Show the input 
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    // Ask for the number of students
+    cout << "Enter the number of students: ";
+    cin >> n;
+
+    // Declare an array to store marks
+    int marks[n];
+
+    // Taking input for student marks
+    cout << "Enter the marks of " << n << " students:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Student " << i + 1 << ": ";
+        cin >> marks[i];
+    }
+
+    // Displaying the marks entered
+    cout << "\nMarks entered are: " << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Student " << i + 1 << ": " << marks[i] << endl;
+    }
+
+    return 0;
+}
